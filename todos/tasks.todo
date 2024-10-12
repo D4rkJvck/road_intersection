@@ -1,0 +1,9 @@
+Main Goals:
+    ☐ `NO WARNING AT COMPILE TIME`
+    ☐ `NO PANIC AT RUNTIME`
+    ☐ `NO COLLISION BETWEEN VEHICLES`
+
+Commands:
+    ☐ Directions -> Generate a vehicle from the `opposite` direction
+    ☐ `R` key -> Generate a vehicle from a `random` direction
+    ☐ `ESCAPE` key -> End of the simulation
