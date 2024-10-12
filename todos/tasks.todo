@@ -48,12 +48,16 @@ Vehicles:
 
 
 TRAFFIC Algorithm:
-    ☐ Safety distance
-    ☐ Traffic rules
+    ☐ Vehicle movement
         -> Turning left
         -> Turning right
         -> Going straight
+        -> Keeping safety distance
 
+    ☐ Traffic rules
+        -> Turn `green` on the most populated lane.
+
+    ☐ Intersection
     
 RENDERING:
     ☐ Roads

@@ -8,6 +8,7 @@
 - [Overview](#overview)
 - [Installation](#installation)
     - [Cloning](#cloning)
+    - [Blueprint](#blueprint)
     - [SDL2 library](#sdl2-library)
         - [Description](#description)
         - [Installing](#installing)
@@ -51,6 +52,23 @@
 $ git clone http://learn.zone01dakar.sn/git/babacandiaye/road_intersection.git
 
 $ cd road_intersection
+```
+
+### Blueprints
+
+#### Classes
+
+```mermaid
+classDiagram
+  class Vehicle {
+    color: Color
+    +move()
+    +stop()
+  }
+
+  class Lane {
+    vehicles: [] Vehicle
+  }
 ```
 
 ### SDL2 Library
