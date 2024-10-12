@@ -2,8 +2,28 @@ Main Goals:
     ☐ `NO WARNING AT COMPILE TIME`
     ☐ `NO PANIC AT RUNTIME`
     ☐ `NO COLLISION BETWEEN VEHICLES`
+    ☐ `NO KEY SPAM`
+    ☐ `SAFETY DISTANCE`: distance which enables the vehicles to avoid crashing into each other.
+
 
 Commands:
-    ☐ Directions -> Generate a vehicle from the `opposite` direction
-    ☐ `R` key -> Generate a vehicle from a `random` direction
-    ☐ `ESCAPE` key -> End of the simulation
+    ☐ `↑ Up`   : Generate vehicle from `Bottom`.
+    ☐ `↓ Down` : Generate vehicle from `Top`.
+    ☐ `→ Right`: Generate vehicle from `Left`.
+    ☐ `← Left` : Generate vehicle from `Right`.
+    ☐ key `R`  : Generate vehicle from a `random` direction.
+    ☐ key `Esc`: `End` of simulation.
+
+
+Vehicles:
+    ☐ Generated with safety distance `(no key spam)`
+    ☐ `Painted` depending on the direction
+    ☐ Cannot change `selected` route
+    ☐ Fixed `velocity`
+    ☐ Keep safety distance `(no collision)`
+    ☐ Stop at `Red` traffic light
+    Assets:
+        limezu
+        finalbossblue.
+        mobilegamegraphics.
+        spriters-resource.
