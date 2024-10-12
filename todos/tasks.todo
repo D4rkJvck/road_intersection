@@ -1,4 +1,27 @@
-Main Goals:
+                        North
+                    |  ↓  |  ↑  |
+                    |  ↓  |  ↑  |
+                    |     |     |
+                    |     |     |
+                    |     |     |
+                    |     |     |
+    ________________|     |     |_______________
+    ← ←                                     ← ←
+East ---------------             --------------- West
+    → →                                     → →
+    _______________             _______________
+                    |     |     |
+                    |     |     |
+                    |     |     |
+                    |     |     |
+                    |     |     |
+                    |  ↓  |  ↑  |
+                    |  ↓  |  ↑  |
+                        South
+
+
+
+ATTENTION:
     ☐ `NO WARNING AT COMPILE TIME`
     ☐ `NO PANIC AT RUNTIME`
     ☐ `NO COLLISION BETWEEN VEHICLES`
@@ -22,8 +45,30 @@ Vehicles:
     ☐ Fixed `velocity`
     ☐ Keep safety distance `(no collision)`
     ☐ Stop at `Red` traffic light
-    Assets:
-        limezu
-        finalbossblue.
-        mobilegamegraphics.
-        spriters-resource.
+
+
+TRAFFIC Algorithm:
+    ☐ Safety distance
+    ☐ Traffic rules
+        -> Turning left
+        -> Turning right
+        -> Going straight
+
+    
+RENDERING:
+    ☐ Roads
+    ☐ Vehicle
+        -> Generation
+        -> Movement
+    ☐ Traffic lights
+        -> Sprites
+
+
+BONUS:
+    ☐ limezu (https://limezu.itch.io/)
+
+    ☐ finalbossblue (http://finalbossblues.com/timefantasy/free-graphics/)
+
+    ☐ mobilegamegraphics (https://mobilegamegraphics.com/product-category/all_products/freestuff/)
+
+    ☐ spriters-resource (https://www.spriters-resource.com/)
