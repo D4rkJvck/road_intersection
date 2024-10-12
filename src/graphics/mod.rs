@@ -1,11 +1,9 @@
 pub mod circles;
-pub mod lines;
+mod lines;
 
-pub use lines::*;
-
+// use lines::Roads;
 use sdl2::{
-    event::Event, keyboard::Keycode, pixels::Color, rect::Point, render::Canvas, video::Window,
-    EventPump,
+    event::Event, keyboard::Keycode, pixels::Color, render::Canvas, video::Window, EventPump,
 };
 
 const WIDTH: u32 = 720;
@@ -56,6 +54,25 @@ impl Interface {
     }
 
     pub fn running(&mut self) -> Result<(), String> {
+        self.render()?;
+        self.listen()
+    }
+
+    /// This function is responsible for rendering
+    /// everything that has been drawn on the canvas
+    /// by calling the concerned drawing functions.
+    fn render(&mut self) -> Result<(), String> {
+        self.display_roads()?;
+
+        self.canvas.present();
+
+        Ok(())
+    }
+
+    /// This function will act like a server that will handle
+    /// user's input as request to call the regarded functions
+    /// as a handler.
+    fn listen(&mut self) -> Result<(), String> {
         let events = self.event_pump.poll_iter();
 
         for event in events {
@@ -90,23 +107,27 @@ impl Interface {
             };
         }
 
-        self.display()
+        Ok(())
     }
 
-    fn display(&mut self) -> Result<(), String> {
+    /// This function performs an iteration
+    /// over the road's vertical and horizontal lines
+    /// and draw them on the canvas.
+    fn display_roads(&mut self) -> Result<(), String> {
         self.canvas.set_draw_color(Color::RGB(255, 255, 255));
 
-        self.roads
-            .vertical
-            .iter()
-            .for_each(|line| self.canvas.draw_line(line.0, line.1).unwrap());
+        self.roads.get_vertical().iter().for_each(|line| {
+            self.canvas
+                .draw_line(line.get_start(), line.get_end())
+                .unwrap()
+        });
 
-        self.roads
-            .horizontal
-            .iter()
-            .for_each(|line| self.canvas.draw_line(line.0, line.1).unwrap());
+        self.roads.get_horizontal().iter().for_each(|line| {
+            self.canvas
+                .draw_line(line.get_start(), line.get_end())
+                .unwrap()
+        });
 
-        self.canvas.present();
         Ok(())
     }
 }

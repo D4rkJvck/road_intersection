@@ -60,7 +60,7 @@ TRAFFIC Algorithm:
     ☐ Intersection
     
 RENDERING:
-    ☐ Roads
+    ✔ Roads @done(24-10-12 21:23)
     ☐ Vehicle
         -> Generation
         -> Movement
