@@ -13,6 +13,7 @@ pub struct Vehicle {
     direction: Direction,
     speed: i32,
     color: Color,
+    turned_left: bool,
 }
 
 impl Vehicle {
@@ -26,6 +27,7 @@ impl Vehicle {
             direction,
             speed: 1,
             color,
+            turned_left: false,
         }
     }
 
@@ -101,26 +103,30 @@ impl Vehicle {
                 }
             }
 
-            //BUG: Logical cycling...
             // Left Turner
+            //BUG Logical cycling... // TEMP: Fixed...
             (North, &Color::CYAN) => {
-                if self.rect.top() == intersection.top() + 5 {
+                if self.rect.top() == intersection.top() + 5 && !self.turned_left {
                     self.direction = West;
+                    self.turned_left = true;
                 }
             }
             (East, &Color::CYAN) => {
-                if self.rect.right() == intersection.right() - 5 {
+                if self.rect.right() == intersection.right() - 5 && !self.turned_left {
                     self.direction = North;
+                    self.turned_left = true;
                 }
             }
             (South, &Color::CYAN) => {
-                if self.rect.bottom() == intersection.bottom() - 5 {
+                if self.rect.bottom() == intersection.bottom() - 5 && !self.turned_left {
                     self.direction = East;
+                    self.turned_left = true;
                 }
             }
             (West, &Color::CYAN) => {
-                if self.rect.left() == intersection.left() + 5 {
+                if self.rect.left() == intersection.left() + 5 && !self.turned_left {
                     self.direction = South;
+                    self.turned_left = true;
                 }
             }
             _ => {}
