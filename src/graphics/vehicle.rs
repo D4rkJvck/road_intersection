@@ -13,7 +13,7 @@ pub struct Vehicle {
     direction: Direction,
     speed: i32,
     color: Color,
-    turned_left: bool,
+    cross: bool,
 }
 
 impl Vehicle {
@@ -27,7 +27,7 @@ impl Vehicle {
             direction,
             speed: 1,
             color,
-            turned_left: false,
+            cross: false,
         }
     }
 
@@ -57,80 +57,9 @@ impl Vehicle {
         };
     }
 
-    /// This function unique role is to update
-    /// the direction when the vehicle reaches
-    /// the intersection based on its previous
-    /// direction and its color.
-    fn turn(&mut self, direction: Direction) {
-        self.direction = direction;
-        self.moving();
-    }
-
-    /// This function's single
-    /// responsibility if to
-    /// toggle the movement
-    /// of the vehicle.
-    fn start_stop(&mut self) {
-        match self.speed {
-            0 => self.speed = 1,
-            _ => self.speed = 0,
-        }
-    }
-
+    ///
     pub fn check_intersection(&mut self, intersection: &Rect) {
-        use Direction::*;
-
-        match (&mut self.direction, &self.color) {
-            // Right Turner
-            (North, &Color::YELLOW) => {
-                if self.rect.bottom() == intersection.bottom() - 5 {
-                    self.direction = East;
-                }
-            }
-            (East, &Color::YELLOW) => {
-                if self.rect.left() == intersection.left() + 5 {
-                    self.direction = South;
-                }
-            }
-            (South, &Color::YELLOW) => {
-                if self.rect.top() == intersection.top() + 5 {
-                    self.direction = West;
-                }
-            }
-            (West, &Color::YELLOW) => {
-                if self.rect.right() == intersection.right() - 5 {
-                    self.direction = North;
-                }
-            }
-
-            // Left Turner
-            //BUG Logical cycling... // TEMP: Fixed...
-            (North, &Color::CYAN) => {
-                if self.rect.top() == intersection.top() + 5 && !self.turned_left {
-                    self.direction = West;
-                    self.turned_left = true;
-                }
-            }
-            (East, &Color::CYAN) => {
-                if self.rect.right() == intersection.right() - 5 && !self.turned_left {
-                    self.direction = North;
-                    self.turned_left = true;
-                }
-            }
-            (South, &Color::CYAN) => {
-                if self.rect.bottom() == intersection.bottom() - 5 && !self.turned_left {
-                    self.direction = East;
-                    self.turned_left = true;
-                }
-            }
-            (West, &Color::CYAN) => {
-                if self.rect.left() == intersection.left() + 5 && !self.turned_left {
-                    self.direction = South;
-                    self.turned_left = true;
-                }
-            }
-            _ => {}
-        };
+        self.turn(intersection);
 
         //todo:(check if the light is green before to set the speed to zero)
         // if self.top == intersection.bottom() as u32 {
@@ -138,6 +67,69 @@ impl Vehicle {
         //     // return true;
         // }
         // false
+    }
+
+    /// This function unique role is to update
+    /// the direction when the vehicle reaches
+    /// the intersection based on its previous
+    /// direction and its color.
+    fn turn(&mut self, intersection: &Rect) {
+        use Direction::*;
+
+        match (&mut self.direction, &self.color) {
+            // Right Turner
+            (North, &Color::YELLOW) => {
+                if self.rect.bottom() == intersection.bottom() - 5 {
+                    self.direction = East;
+                    self.cross = true;
+                }
+            }
+            (East, &Color::YELLOW) => {
+                if self.rect.left() == intersection.left() + 5 {
+                    self.direction = South;
+                    self.cross = true;
+                }
+            }
+            (South, &Color::YELLOW) => {
+                if self.rect.top() == intersection.top() + 5 {
+                    self.direction = West;
+                    self.cross = true;
+                }
+            }
+            (West, &Color::YELLOW) => {
+                if self.rect.right() == intersection.right() - 5 {
+                    self.direction = North;
+                    self.cross = true;
+                }
+            }
+
+            // Left Turner
+            (North, &Color::CYAN) => {
+                if self.rect.top() == intersection.top() + 5 && !self.cross {
+                    self.direction = West;
+                    self.cross = true;
+                }
+            }
+            (East, &Color::CYAN) => {
+                if self.rect.right() == intersection.right() - 5 && !self.cross {
+                    self.direction = North;
+                    self.cross = true;
+                }
+            }
+            (South, &Color::CYAN) => {
+                if self.rect.bottom() == intersection.bottom() - 5 && !self.cross {
+                    self.direction = East;
+                    self.cross = true;
+                }
+            }
+            (West, &Color::CYAN) => {
+                if self.rect.left() == intersection.left() + 5 && !self.cross {
+                    self.direction = South;
+                    self.cross = true;
+                }
+            }
+            _ => {}
+        };
     }
 
     /// This function is crucial when
