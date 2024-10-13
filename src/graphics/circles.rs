@@ -58,6 +58,7 @@ use sdl2::rect::Point;
 ///     }
 /// }
 /// ```
+#[allow(unused)]
 pub struct Circle {
     center: Point
 }

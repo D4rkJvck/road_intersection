@@ -1,17 +1,14 @@
-use sdl2::{pixels::Color, rect::Point, render::Canvas, video::Window};
+use sdl2::{pixels::Color, render::Canvas, video::Window};
 
 use super::lines::Line;
 
 pub struct VehicleArea {
     color: Color,
-    position: Point,
     sides: Vec<Line>,
 }
 
 impl VehicleArea {
     pub fn new(x: i32, y: i32, color: Color) -> Self {
-        let position = Point::new(x, y);
-
         let top = Line::new(x, y, x + 50, y);
         let right = Line::new(x + 50, y, x + 50, y + 50);
         let bottom = Line::new(x + 50, y + 50, x, y + 50);
@@ -19,7 +16,6 @@ impl VehicleArea {
 
         Self {
             color,
-            position,
             sides: vec![top, right, bottom, left],
         }
     }
