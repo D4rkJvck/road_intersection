@@ -56,36 +56,7 @@ impl Interface {
             .unwrap();
 
         let road = Road::new(WIDTH, HEIGHT);
-        let vehicles = vec![
-            Vehicle::new(
-                WIDTH as i32 / 2 - 45,
-                0,
-                40,
-                Direction::South,
-                Color::BLUE,
-            ),
-            Vehicle::new(
-                0,
-                HEIGHT as i32 / 2 + 5,
-                40,
-                Direction::East,
-                Color::YELLOW,
-            ),
-            Vehicle::new(
-                WIDTH as i32 - 45,
-                HEIGHT as i32 / 2 - 45,
-                40,
-                Direction::West,
-                Color::RED,
-            ),
-            Vehicle::new(
-                WIDTH as i32 / 2 + 5,
-                HEIGHT as i32 - 45,
-                40,
-                Direction::North,
-                Color::GREEN,
-            ),
-        ];
+        let vehicles = Vec::new();
 
         Ok(Self {
             canvas,
@@ -137,19 +108,43 @@ impl Interface {
                 KeyDown {
                     keycode: Some(Keycode::UP),
                     ..
-                } => {} // TODO: Generate new `vehicle` from "North"
+                } => self.vehicles.push(Vehicle::new(
+                    WIDTH as i32 / 2 + 5,
+                    HEIGHT as i32 - 45,
+                    40,
+                    Direction::North,
+                    Color::GREEN,
+                )),
                 KeyDown {
                     keycode: Some(Keycode::RIGHT),
                     ..
-                } => {} // TODO: Generate new `vehicle` from "West"
+                } => self.vehicles.push(Vehicle::new(
+                    0,
+                    HEIGHT as i32 / 2 + 5,
+                    40,
+                    Direction::East,
+                    Color::YELLOW,
+                )),
                 KeyDown {
                     keycode: Some(Keycode::DOWN),
                     ..
-                } => {} // TODO: Generate new `vehicle` from "South"
+                } => self.vehicles.push(Vehicle::new(
+                    WIDTH as i32 / 2 - 45,
+                    0,
+                    40,
+                    Direction::South,
+                    Color::BLUE,
+                )),
                 KeyDown {
                     keycode: Some(Keycode::LEFT),
                     ..
-                } => {} // TODO: Generate new `vehicle` from "East"
+                } => self.vehicles.push(Vehicle::new(
+                    WIDTH as i32 - 45,
+                    HEIGHT as i32 / 2 - 45,
+                    40,
+                    Direction::West,
+                    Color::RED,
+                )),
                 Quit { .. }
                 | KeyDown {
                     keycode: Some(Keycode::ESCAPE),
