@@ -1,20 +1,6 @@
+use super::Vehicle;
+use crate::{models::Direction, HEIGHT, WIDTH};
 use sdl2::{pixels::Color, rect::Rect, render::Canvas, video::Window};
-
-use crate::models::Direction;
-
-use super::{HEIGHT, WIDTH};
-
-/// This is the only
-/// element that will
-/// perform translation
-/// updates.
-pub struct Vehicle {
-    rect: Rect,
-    direction: Direction,
-    speed: i32,
-    color: Color,
-    cross: bool,
-}
 
 impl Vehicle {
     /// The structure is initialized using the sdl2 Rect structure's parameters and

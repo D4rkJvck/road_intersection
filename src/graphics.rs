@@ -1,29 +1,16 @@
-mod road;
-mod vehicle;
-
-use crate::models::Direction;
-use road::Road;
+use crate::{
+    models::{Direction, Road, Vehicle},
+    Interface, HEIGHT, TITLE, WIDTH,
+};
 use sdl2::{
     event::Event::{KeyDown, Quit},
     keyboard::Keycode,
     pixels::Color,
-    render::Canvas,
-    video::Window,
-    EventPump,
 };
 use std::{thread, time::Duration};
-use vehicle::Vehicle;
 
-const TITLE: &str = "ROAD INTERSECTION";
-const WIDTH: u32 = 720;
-const HEIGHT: u32 = 720;
-
-pub struct Interface {
-    canvas: Canvas<Window>,
-    event_pump: EventPump,
-    road: Road,
-    vehicles: Vec<Vehicle>,
-}
+//_________________________________________________________________________________________________________
+//
 
 impl Interface {
     /// This method holds all the logic around the `SDL` implementation.

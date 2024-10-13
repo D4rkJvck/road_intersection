@@ -30,19 +30,19 @@ ATTENTION:
 
 
 Commands:
-    ☐ `↑ Up`   : Generate vehicle from `Bottom`.
-    ☐ `↓ Down` : Generate vehicle from `Top`.
-    ☐ `→ Right`: Generate vehicle from `Left`.
-    ☐ `← Left` : Generate vehicle from `Right`.
+    ✔ `↑ Up`   : Generate vehicle from `Bottom`. @done(24-10-13 17:15)
+    ✔ `↓ Down` : Generate vehicle from `Top`. @done(24-10-13 17:15)
+    ✔ `→ Right`: Generate vehicle from `Left`. @done(24-10-13 17:15)
+    ✔ `← Left` : Generate vehicle from `Right`. @done(24-10-13 17:15)
     ☐ key `R`  : Generate vehicle from a `random` direction.
-    ☐ key `Esc`: `End` of simulation.
+    ✔ key `Esc`: `End` of simulation. @done(24-10-13 17:15)
 
 
 Vehicles:
     ☐ Generated with safety distance `(no key spam)`
-    ☐ `Painted` depending on the direction
-    ☐ Cannot change `selected` route
-    ☐ Fixed `velocity`
+    ✔ `Painted` depending on the direction @done(24-10-13 17:15)
+    ✔ Cannot change `selected` route @done(24-10-13 17:15)
+    ✔ Fixed `velocity` @done(24-10-13 17:15)
     ☐ Keep safety distance `(no collision)`
     ☐ Stop at `Red` traffic light
 
@@ -61,10 +61,10 @@ TRAFFIC Algorithm:
     
 RENDERING:
     ✔ Roads @done(24-10-12 21:23)
-    ☐ Vehicle
+    ✔ Vehicle @done(24-10-13 17:16)
         -> Generation
         -> Movement
-    ☐ Traffic lights
+    ✔ Traffic lights @done(24-10-13 17:16)
         -> Sprites
 
 

@@ -1,19 +1,19 @@
 Functional:
 
     Try to run the application.
-        ☐ Does the application start?
+        ✔ Does the application start? @done(24-10-13 17:11)
 
     Try to generate a vehicle by pressing the `"Arrow Up"` key.
-        ☐ Was a vehicle generated from the south, with a random route?
+        ✔ Was a vehicle generated from the south, with a random route? @done(24-10-13 17:12)
 
     Try to generate a vehicle by pressing the `"Arrow Down"` key.
-        ☐ Was a vehicle generated from the north, with a random route?
+        ✔ Was a vehicle generated from the north, with a random route? @done(24-10-13 17:12)
 
     Try to generate a vehicle by pressing the `"Arrow Right"` key.
-        ☐ Was a vehicle generated from the west, with a random route?
+        ✔ Was a vehicle generated from the west, with a random route? @done(24-10-13 17:12)
 
     Try to generate a vehicle by pressing the `"Arrow left"` key.
-        ☐ Was a vehicle generated from the east, with a random route?
+        ✔ Was a vehicle generated from the east, with a random route? @done(24-10-13 17:12)
 
     Try pressing the `"r"` key.
         ☐ Was the vehicle generated from a random direction, with a random route?
@@ -55,7 +55,7 @@ Functional:
         ☐ Did all the vehicles pass through the intersection without any collisions?
 
     Try pressing the `"Esc"` key.
-        ☐ Was the simulation ended?
+        ✔ Was the simulation ended? @done(24-10-13 17:12)
         ☐ High traffic congestion is when there are 8 or more vehicles in the same lane without proceeding. Was there low traffic congestion while running the simulation?
 
 General:
@@ -64,7 +64,7 @@ General:
 
     Ask the captain of the raid to show you information about how the color of cars relates to its random route.
         ☐ Was the information about colors and routes available?
-        ☐ Are vehicles assigned to their own route with an appropriate color? If so, do they obey that route?
+        ✔ Are vehicles assigned to their own route with an appropriate color? If so, do they obey that route? @done(24-10-13 17:14)
         ☐ Do the vehicles keep a safe distance by avoiding a collision when the car in front stops?
         ☐ Do vehicles stop whenever there is a red light?
         ☐ Do vehicles proceed whenever there is a green light?

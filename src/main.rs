@@ -1,8 +1,7 @@
+use road_intersection::Interface;
 use std::{error::Error, process};
 
-use road_intersection::graphics::Interface;
-
-/// Make sure to have minimum responsibility
+/// Making sure to have minimum responsibility
 /// while having an essential responsibility.
 /// Responsible for exiting the program when needed.
 fn main() -> Result<(), Box<dyn Error>> {
