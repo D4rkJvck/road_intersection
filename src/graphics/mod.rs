@@ -1,4 +1,3 @@
-mod circles;
 mod road;
 mod vehicle;
 
@@ -100,9 +99,7 @@ impl Interface {
 
     /// This function will act like a server that will handle
     /// user's input as request to call the regarded functions
-    /// as a handler.
-    ///
-
+    /// as handlers.
     fn listen(&mut self) -> Result<(), String> {
         let events = self.event_pump.poll_iter();
 

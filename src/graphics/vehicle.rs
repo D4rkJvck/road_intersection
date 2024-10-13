@@ -57,9 +57,17 @@ impl Vehicle {
         };
     }
 
-    ///
+    /// This functions is the traffic monitor.
+    /// It role is to manage the vehicle's behaviour depending on
+    /// the traffic lights and the other vehicles.
+    /// It updates the direction when the vehicle reaches
+    /// the intersection based on its previous direction and its color.
     pub fn check_intersection(&mut self, intersection: &Rect) {
-        self.turn(intersection);
+        match &self.color {
+            &Color::YELLOW => self.turn_right(intersection),
+            &Color::CYAN => self.turn_left(intersection),
+            _ => {}
+        };
 
         //todo:(check if the light is green before to set the speed to zero)
         // if self.top == intersection.bottom() as u32 {
@@ -69,67 +77,66 @@ impl Vehicle {
         // false
     }
 
-    /// This function unique role is to update
-    /// the direction when the vehicle reaches
-    /// the intersection based on its previous
-    /// direction and its color.
-    fn turn(&mut self, intersection: &Rect) {
-        use Direction::*;
-
-        match (&mut self.direction, &self.color) {
-            // Right Turner
-            (North, &Color::YELLOW) => {
+    /// It handles the direction assignment of the vehicle
+    /// to its right depending on its direction.
+    fn turn_right(&mut self, intersection: &Rect) {
+        match &self.direction {
+            Direction::North => {
                 if self.rect.bottom() == intersection.bottom() - 5 {
-                    self.direction = East;
+                    self.direction = Direction::East;
                     self.cross = true;
                 }
             }
-            (East, &Color::YELLOW) => {
+            Direction::East => {
                 if self.rect.left() == intersection.left() + 5 {
-                    self.direction = South;
+                    self.direction = Direction::South;
                     self.cross = true;
                 }
             }
-            (South, &Color::YELLOW) => {
+            Direction::South => {
                 if self.rect.top() == intersection.top() + 5 {
-                    self.direction = West;
+                    self.direction = Direction::West;
                     self.cross = true;
                 }
             }
-            (West, &Color::YELLOW) => {
+            Direction::West => {
                 if self.rect.right() == intersection.right() - 5 {
-                    self.direction = North;
+                    self.direction = Direction::North;
                     self.cross = true;
                 }
             }
+        }
+    }
 
-            // Left Turner
-            (North, &Color::CYAN) => {
+    /// It handles the direction assignment of the vehicle
+    /// to its left depending on its direction.
+    fn turn_left(&mut self, intersection: &Rect) {
+        match &self.direction {
+            Direction::North => {
                 if self.rect.top() == intersection.top() + 5 && !self.cross {
-                    self.direction = West;
+                    self.direction = Direction::West;
                     self.cross = true;
                 }
             }
-            (East, &Color::CYAN) => {
+            Direction::East => {
                 if self.rect.right() == intersection.right() - 5 && !self.cross {
-                    self.direction = North;
+                    self.direction = Direction::North;
                     self.cross = true;
                 }
             }
-            (South, &Color::CYAN) => {
+            Direction::South => {
                 if self.rect.bottom() == intersection.bottom() - 5 && !self.cross {
-                    self.direction = East;
+                    self.direction = Direction::East;
                     self.cross = true;
                 }
             }
-            (West, &Color::CYAN) => {
+            Direction::West => {
                 if self.rect.left() == intersection.left() + 5 && !self.cross {
-                    self.direction = South;
+                    self.direction = Direction::South;
                     self.cross = true;
                 }
             }
-            _ => {}
-        };
+        }
     }
 
     /// This function is crucial when
