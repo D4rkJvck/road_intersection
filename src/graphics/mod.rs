@@ -56,13 +56,36 @@ impl Interface {
             .unwrap();
 
         let road = Road::new(WIDTH, HEIGHT);
-        let vehicles = vec![Vehicle::new(
-            WIDTH as i32 / 2 - 45,
-            0,
-            40,
-            Direction::South,
-            Color::BLUE,
-        )];
+        let vehicles = vec![
+            Vehicle::new(
+                WIDTH as i32 / 2 - 45,
+                0,
+                40,
+                Direction::South,
+                Color::BLUE,
+            ),
+            Vehicle::new(
+                0,
+                HEIGHT as i32 / 2 + 5,
+                40,
+                Direction::East,
+                Color::YELLOW,
+            ),
+            Vehicle::new(
+                WIDTH as i32 - 45,
+                HEIGHT as i32 / 2 - 45,
+                40,
+                Direction::West,
+                Color::RED,
+            ),
+            Vehicle::new(
+                WIDTH as i32 / 2 + 5,
+                HEIGHT as i32 - 45,
+                40,
+                Direction::North,
+                Color::GREEN,
+            ),
+        ];
 
         Ok(Self {
             canvas,
@@ -78,8 +101,6 @@ impl Interface {
     pub fn running(&mut self) -> Result<(), String> {
         // Remove the vehicules that moved out of the window.
         self.vehicles.retain(|v| v.is_in_window());
-
-        dbg!("{:#?}", &self.vehicles);
 
         self.render()?;
         self.listen()
