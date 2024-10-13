@@ -67,7 +67,8 @@ classDiagram
   }
 
   class Lane {
-    vehicles: [] Vehicle
+    vehicles: [ ] Vehicle
+    
   }
 ```
 

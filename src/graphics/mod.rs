@@ -1,11 +1,11 @@
 mod circles;
 mod road;
-mod squares;
+mod vehicle;
 
 use crate::models::Direction;
+use vehicle::Vehicle;
 use std::{thread, time::Duration};
 use road::Road;
-use squares::Square;
 use sdl2::{
     event::Event::{KeyDown, Quit},
     keyboard::Keycode,
@@ -23,7 +23,7 @@ pub struct Interface {
     canvas: Canvas<Window>,
     event_pump: EventPump,
     road: Road,
-    vehicles: Vec<Square>,
+    vehicles: Vec<Vehicle>,
 }
 
 impl Interface {
@@ -56,7 +56,7 @@ impl Interface {
             .unwrap();
 
         let road = Road::new(WIDTH, HEIGHT);
-        let vehicles = vec![Square::new(
+        let vehicles = vec![Vehicle::new(
             WIDTH as i32 / 2 - 45,
             0,
             40,
@@ -84,10 +84,13 @@ impl Interface {
     /// everything that has been drawn on the canvas
     /// by calling the concerned drawing functions.
     fn render(&mut self) -> Result<(), String> {
+        self.canvas.set_draw_color(Color::BLACK);
+        self.canvas.clear();
+
         self.road.display(&mut self.canvas)?;
 
         self.vehicles
-            .iter()
+            .iter_mut()
             .for_each(|v| v.display(&mut self.canvas).unwrap());
 
         self.canvas.present();
