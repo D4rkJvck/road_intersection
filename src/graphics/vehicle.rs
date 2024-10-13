@@ -61,7 +61,6 @@ impl Vehicle {
             Direction::South => self.rect.y += self.speed,
             Direction::West => self.rect.x -= self.speed,
         };
-
         self.update_position();
     }
 
@@ -94,6 +93,24 @@ impl Vehicle {
         self.right = (self.rect.x + self.rect.w) as u32;
         self.bottom = (self.rect.y + self.rect.h) as u32;
         self.left = self.rect.x as u32
+    }
+
+    pub fn check_intersection(&mut self, intersection: &Rect) /*-> bool*/
+    {
+        if let Direction::North = self.direction {
+            if let Color::GREEN = self.color {
+                if self.top == intersection.top() as u32 + 5 {
+                    self.direction = Direction::West;
+                }
+            }
+
+            //todo:(check if the light is green before to set the speed to zero)
+            // if self.top == intersection.bottom() as u32 {
+            //     self.speed = 0;
+            //     // return true;
+            // }
+        }
+        // false
     }
 
     /// This function is crucial when

@@ -86,9 +86,10 @@ impl Interface {
 
         self.road.display(&mut self.canvas)?;
 
-        self.vehicles
-            .iter_mut()
-            .for_each(|v| v.display(&mut self.canvas).unwrap());
+        self.vehicles.iter_mut().for_each(|v| {
+            v.check_intersection(&self.road.intersection);
+            v.display(&mut self.canvas).unwrap();
+        });
 
         self.canvas.present();
 
@@ -100,6 +101,8 @@ impl Interface {
     /// This function will act like a server that will handle
     /// user's input as request to call the regarded functions
     /// as a handler.
+    ///
+
     fn listen(&mut self) -> Result<(), String> {
         let events = self.event_pump.poll_iter();
 

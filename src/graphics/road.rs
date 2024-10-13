@@ -26,7 +26,7 @@ impl Line {
 /// objects to be visualized in the simulation.
 pub struct Road {
     lines: Vec<Line>,
-    intersection: Rect,
+    pub intersection: Rect,
     traffic_lights: HashMap<String, Rect>,
 }
 
