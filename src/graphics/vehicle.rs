@@ -10,10 +10,6 @@ use super::{HEIGHT, WIDTH};
 /// updates.
 pub struct Vehicle {
     rect: Rect,
-    top: u32,
-    right: u32,
-    bottom: u32,
-    left: u32,
     direction: Direction,
     speed: i32,
     color: Color,
@@ -27,10 +23,6 @@ impl Vehicle {
     pub fn new(x: i32, y: i32, side: u32, direction: Direction, color: Color) -> Self {
         Self {
             rect: Rect::new(x, y, side, side),
-            top: y as u32,
-            right: x as u32 + side,
-            bottom: y as u32 + side,
-            left: x as u32,
             direction,
             speed: 1,
             color,
@@ -61,7 +53,6 @@ impl Vehicle {
             Direction::South => self.rect.y += self.speed,
             Direction::West => self.rect.x -= self.speed,
         };
-        self.update_position();
     }
 
     /// This function unique role is to update
@@ -84,32 +75,62 @@ impl Vehicle {
         }
     }
 
-    /// This function will update
-    /// the position's markers
-    /// such as top, left...
-    /// whenever the position changes
-    fn update_position(&mut self) {
-        self.top = self.rect.y as u32;
-        self.right = (self.rect.x + self.rect.w) as u32;
-        self.bottom = (self.rect.y + self.rect.h) as u32;
-        self.left = self.rect.x as u32
-    }
+    pub fn check_intersection(&mut self, intersection: &Rect) {
+        use Direction::*;
 
-    pub fn check_intersection(&mut self, intersection: &Rect) /*-> bool*/
-    {
-        if let Direction::North = self.direction {
-            if let Color::GREEN = self.color {
-                if self.top == intersection.top() as u32 + 5 {
-                    self.direction = Direction::West;
+        match (&mut self.direction, &self.color) {
+            // Right Turner
+            (North, &Color::YELLOW) => {
+                if self.rect.bottom() == intersection.bottom() - 5 {
+                    self.direction = East;
+                }
+            }
+            (East, &Color::YELLOW) => {
+                if self.rect.left() == intersection.left() + 5 {
+                    self.direction = South;
+                }
+            }
+            (South, &Color::YELLOW) => {
+                if self.rect.top() == intersection.top() + 5 {
+                    self.direction = West;
+                }
+            }
+            (West, &Color::YELLOW) => {
+                if self.rect.right() == intersection.right() - 5 {
+                    self.direction = North;
                 }
             }
 
-            //todo:(check if the light is green before to set the speed to zero)
-            // if self.top == intersection.bottom() as u32 {
-            //     self.speed = 0;
-            //     // return true;
-            // }
-        }
+            //BUG: Logical cycling...
+            // Left Turner
+            (North, &Color::CYAN) => {
+                if self.rect.top() == intersection.top() + 5 {
+                    self.direction = West;
+                }
+            }
+            (East, &Color::CYAN) => {
+                if self.rect.right() == intersection.right() - 5 {
+                    self.direction = North;
+                }
+            }
+            (South, &Color::CYAN) => {
+                if self.rect.bottom() == intersection.bottom() - 5 {
+                    self.direction = East;
+                }
+            }
+            (West, &Color::CYAN) => {
+                if self.rect.left() == intersection.left() + 5 {
+                    self.direction = South;
+                }
+            }
+            _ => {}
+        };
+
+        //todo:(check if the light is green before to set the speed to zero)
+        // if self.top == intersection.bottom() as u32 {
+        //     self.speed = 0;
+        //     // return true;
+        // }
         // false
     }
 
@@ -118,6 +139,9 @@ impl Vehicle {
     /// as it confirm that the vehicle is
     /// out of the window...
     pub fn is_in_window(&self) -> bool {
-        self.top < HEIGHT && self.left < WIDTH && self.right > 0 && self.bottom > 0
+        self.rect.top() < HEIGHT as i32
+            && self.rect.left() < WIDTH as i32
+            && self.rect.right() > 0
+            && self.rect.bottom() > 0
     }
 }

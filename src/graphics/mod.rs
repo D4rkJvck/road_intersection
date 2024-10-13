@@ -116,7 +116,7 @@ impl Interface {
                     HEIGHT as i32 - 45,
                     40,
                     Direction::North,
-                    Color::GREEN,
+                    Color::CYAN,
                 )),
                 KeyDown {
                     keycode: Some(Keycode::RIGHT),
@@ -126,7 +126,7 @@ impl Interface {
                     HEIGHT as i32 / 2 + 5,
                     40,
                     Direction::East,
-                    Color::YELLOW,
+                    Color::CYAN,
                 )),
                 KeyDown {
                     keycode: Some(Keycode::DOWN),
@@ -136,7 +136,7 @@ impl Interface {
                     0,
                     40,
                     Direction::South,
-                    Color::BLUE,
+                    Color::CYAN,
                 )),
                 KeyDown {
                     keycode: Some(Keycode::LEFT),
@@ -146,7 +146,7 @@ impl Interface {
                     HEIGHT as i32 / 2 - 45,
                     40,
                     Direction::West,
-                    Color::RED,
+                    Color::CYAN,
                 )),
                 Quit { .. }
                 | KeyDown {
