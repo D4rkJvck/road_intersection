@@ -1,3 +1,3 @@
-pub mod models;
-pub mod graphics;
 pub mod errors;
+pub mod graphics;
+pub mod models;

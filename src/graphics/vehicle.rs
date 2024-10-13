@@ -4,7 +4,10 @@ use crate::models::Direction;
 
 use super::{HEIGHT, WIDTH};
 
-#[derive(Debug)]
+/// This is the only
+/// element that will
+/// perform translation
+/// updates.
 pub struct Vehicle {
     rect: Rect,
     top: u32,
@@ -17,6 +20,10 @@ pub struct Vehicle {
 }
 
 impl Vehicle {
+    /// The structure is initialized using the sdl2 Rect structure's parameters and
+    /// some additional such as the color and the direction that will be pretty useful.
+    /// The rest of the structure's fields will be calculated from the given parameters
+    /// or just initialize to a default value.
     pub fn new(x: i32, y: i32, side: u32, direction: Direction, color: Color) -> Self {
         Self {
             rect: Rect::new(x, y, side, side),
@@ -43,6 +50,10 @@ impl Vehicle {
         Ok(())
     }
 
+    /// This is the function
+    /// responsible for the
+    /// translation by
+    /// updating the position.
     fn moving(&mut self) {
         match self.direction {
             Direction::North => self.rect.y -= self.speed,
@@ -54,11 +65,19 @@ impl Vehicle {
         self.update_position();
     }
 
+    /// This function unique role is to update
+    /// the direction when the vehicle reaches
+    /// the intersection based on its previous
+    /// direction and its color.
     fn turn(&mut self, direction: Direction) {
         self.direction = direction;
         self.moving();
     }
 
+    /// This function's single
+    /// responsibility if to
+    /// toggle the movement
+    /// of the vehicle.
     fn start_stop(&mut self) {
         match self.speed {
             0 => self.speed = 1,
@@ -66,6 +85,10 @@ impl Vehicle {
         }
     }
 
+    /// This function will update
+    /// the position's markers
+    /// such as top, left...
+    /// whenever the position changes
     fn update_position(&mut self) {
         self.top = self.rect.y as u32;
         self.right = (self.rect.x + self.rect.w) as u32;
@@ -73,6 +96,10 @@ impl Vehicle {
         self.left = self.rect.x as u32
     }
 
+    /// This function is crucial when
+    /// it comes to remove vehicule
+    /// as it confirm that the vehicle is
+    /// out of the window...
     pub fn is_in_window(&self) -> bool {
         self.top < HEIGHT && self.left < WIDTH && self.right > 0 && self.bottom > 0
     }
