@@ -3,8 +3,6 @@ mod road;
 mod vehicle;
 
 use crate::models::Direction;
-use vehicle::Vehicle;
-use std::{thread, time::Duration};
 use road::Road;
 use sdl2::{
     event::Event::{KeyDown, Quit},
@@ -14,6 +12,8 @@ use sdl2::{
     video::Window,
     EventPump,
 };
+use std::{thread, time::Duration};
+use vehicle::Vehicle;
 
 const TITLE: &str = "ROAD INTERSECTION";
 const WIDTH: u32 = 720;
@@ -61,7 +61,7 @@ impl Interface {
             0,
             40,
             Direction::South,
-            Color::RGB(0, 0, 255),
+            Color::BLUE,
         )];
 
         Ok(Self {
@@ -76,6 +76,11 @@ impl Interface {
     /// It is responsible for updating the state of the
     /// window.
     pub fn running(&mut self) -> Result<(), String> {
+        // Remove the vehicules that moved out of the window.
+        self.vehicles.retain(|v| v.is_in_window());
+
+        dbg!("{:#?}", &self.vehicles);
+
         self.render()?;
         self.listen()
     }
@@ -108,11 +113,27 @@ impl Interface {
 
         for event in events {
             match event {
-                KeyDown { keycode: Some(Keycode::UP), .. } => {}            // TODO: Generate new `vehicle` from "North"
-                KeyDown { keycode: Some(Keycode::RIGHT), .. } => {}         // TODO: Generate new `vehicle` from "West"
-                KeyDown { keycode: Some(Keycode::DOWN), .. } => {}          // TODO: Generate new `vehicle` from "South"
-                KeyDown { keycode: Some(Keycode::LEFT), .. } => {}          // TODO: Generate new `vehicle` from "East"
-                Quit { .. } | KeyDown { keycode: Some(Keycode::ESCAPE), .. } => return Err("Exiting...".to_string()),
+                KeyDown {
+                    keycode: Some(Keycode::UP),
+                    ..
+                } => {} // TODO: Generate new `vehicle` from "North"
+                KeyDown {
+                    keycode: Some(Keycode::RIGHT),
+                    ..
+                } => {} // TODO: Generate new `vehicle` from "West"
+                KeyDown {
+                    keycode: Some(Keycode::DOWN),
+                    ..
+                } => {} // TODO: Generate new `vehicle` from "South"
+                KeyDown {
+                    keycode: Some(Keycode::LEFT),
+                    ..
+                } => {} // TODO: Generate new `vehicle` from "East"
+                Quit { .. }
+                | KeyDown {
+                    keycode: Some(Keycode::ESCAPE),
+                    ..
+                } => return Err("Exiting...".to_string()),
                 _ => {}
             }
         }

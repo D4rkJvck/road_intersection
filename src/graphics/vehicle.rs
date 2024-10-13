@@ -2,15 +2,17 @@ use sdl2::{pixels::Color, rect::Rect, render::Canvas, video::Window};
 
 use crate::models::Direction;
 
-const SPEED: i32 = 1;
+use super::{HEIGHT, WIDTH};
 
+#[derive(Debug)]
 pub struct Vehicle {
     rect: Rect,
-    top: i32,
-    right: i32,
-    bottom: i32,
-    left: i32,
+    top: u32,
+    right: u32,
+    bottom: u32,
+    left: u32,
     direction: Direction,
+    speed: i32,
     color: Color,
 }
 
@@ -18,11 +20,12 @@ impl Vehicle {
     pub fn new(x: i32, y: i32, side: u32, direction: Direction, color: Color) -> Self {
         Self {
             rect: Rect::new(x, y, side, side),
-            top: y,
-            right: x + side as i32,
-            bottom: y + side as i32,
-            left: x,
+            top: y as u32,
+            right: x as u32 + side,
+            bottom: y as u32 + side,
+            left: x as u32,
             direction,
+            speed: 1,
             color,
         }
     }
@@ -33,17 +36,44 @@ impl Vehicle {
     pub fn display(&mut self, canvas: &mut Canvas<Window>) -> Result<(), String> {
         canvas.set_draw_color(self.color);
 
-        match self.direction {
-            Direction::North => self.rect.y -= SPEED,
-            Direction::East => self.rect.x += SPEED,
-            Direction::South => self.rect.y += SPEED,
-            Direction::West => self.rect.x -= SPEED,
-        }
+        self.moving();
 
         canvas.fill_rect(self.rect)?;
 
         Ok(())
     }
 
-    // pub fn get_front(&self) -> u32
+    fn moving(&mut self) {
+        match self.direction {
+            Direction::North => self.rect.y -= self.speed,
+            Direction::East => self.rect.x += self.speed,
+            Direction::South => self.rect.y += self.speed,
+            Direction::West => self.rect.x -= self.speed,
+        };
+
+        self.update_position();
+    }
+
+    fn turn(&mut self, direction: Direction) {
+        self.direction = direction;
+        self.moving();
+    }
+
+    fn start_stop(&mut self) {
+        match self.speed {
+            0 => self.speed = 1,
+            _ => self.speed = 0,
+        }
+    }
+
+    fn update_position(&mut self) {
+        self.top = self.rect.y as u32;
+        self.right = (self.rect.x + self.rect.w) as u32;
+        self.bottom = (self.rect.y + self.rect.h) as u32;
+        self.left = self.rect.x as u32
+    }
+
+    pub fn is_in_window(&self) -> bool {
+        self.top < HEIGHT && self.left < WIDTH && self.right > 0 && self.bottom > 0
+    }
 }

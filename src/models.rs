@@ -5,6 +5,7 @@ pub enum VehicleColor {
     Orange,
 }
 
+#[derive(Debug)]
 pub enum Direction {
     North,
     East,
