@@ -2,6 +2,8 @@ use std::collections::HashMap;
 
 use sdl2::{pixels::Color, rect::Point, render::Canvas, video::Window};
 
+use crate::models::Direction;
+
 use super::squares::Square;
 
 pub struct Line(Point, Point);
@@ -23,7 +25,7 @@ impl Line {
 pub struct Road {
     lines: Vec<Line>,
     intersection: Square,
-    traffic_lights: HashMap<String, Square>,
+    // traffic_lights: HashMap<String, Square>,
 }
 
 impl Road {
@@ -42,18 +44,18 @@ impl Road {
             Line::new(mid_width + 50, 0, mid_width + 50, height as i32), // Right
         ];
 
-        let intersection = Square::new(mid_width - 50, mid_height - 50, 100, Color::RGB(0, 0, 0));
+        let intersection = Square::new(mid_width - 50, mid_height - 50, 101, Direction::South, Color::RGB(0, 0, 0));
 
-        let mut traffic_lights = HashMap::new();
-        traffic_lights.insert("North".to_string(),Square::new(mid_width + 60, mid_height + 60, 25, Color::RGB(255, 0, 0)));
-        traffic_lights.insert("South".to_string(), Square::new(mid_width - 85, mid_height - 85, 25, Color::RGB(255, 0, 0)));
-        traffic_lights.insert("West".to_string(),Square::new(mid_width + 60, mid_height - 85, 25, Color::RGB(255, 0, 0)));
-        traffic_lights.insert("East".to_string(),Square::new(mid_width - 85, mid_height + 60, 25, Color::RGB(255, 0, 0)));
+        // let mut traffic_lights = HashMap::new();
+        // traffic_lights.insert("North".to_string(),Square::new(mid_width + 60, mid_height + 60, 25, Color::RGB(255, 0, 0)));
+        // traffic_lights.insert("South".to_string(), Square::new(mid_width - 85, mid_height - 85, 25, Color::RGB(255, 0, 0)));
+        // traffic_lights.insert("West".to_string(),Square::new(mid_width + 60, mid_height - 85, 25, Color::RGB(255, 0, 0)));
+        // traffic_lights.insert("East".to_string(),Square::new(mid_width - 85, mid_height + 60, 25, Color::RGB(255, 0, 0)));
 
         Self {
             lines,
             intersection,
-            traffic_lights,
+            // traffic_lights,
         }
     }
 
@@ -71,9 +73,9 @@ impl Road {
 
         self.intersection.display(canvas)?;
 
-        for (_, light) in self.traffic_lights.iter() {
-            light.display(canvas)?;
-        }
+        // for (_, light) in self.traffic_lights.iter() {
+        //     light.display(canvas)?;
+        // }
 
         Ok(())
     }

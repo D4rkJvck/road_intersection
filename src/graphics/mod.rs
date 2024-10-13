@@ -1,8 +1,11 @@
 mod circles;
-mod lines;
+mod road;
 mod squares;
 
-use lines::Road;
+use crate::models::Direction;
+use std::{thread, time::Duration};
+use road::Road;
+use squares::Square;
 use sdl2::{
     event::Event::{KeyDown, Quit},
     keyboard::Keycode,
@@ -11,7 +14,6 @@ use sdl2::{
     video::Window,
     EventPump,
 };
-use squares::Square;
 
 const TITLE: &str = "ROAD INTERSECTION";
 const WIDTH: u32 = 720;
@@ -55,9 +57,10 @@ impl Interface {
 
         let road = Road::new(WIDTH, HEIGHT);
         let vehicles = vec![Square::new(
-            WIDTH as i32 / 2 - 50,
+            WIDTH as i32 / 2 - 45,
             0,
-            50,
+            40,
+            Direction::South,
             Color::RGB(0, 0, 255),
         )];
 
@@ -88,6 +91,8 @@ impl Interface {
             .for_each(|v| v.display(&mut self.canvas).unwrap());
 
         self.canvas.present();
+
+        thread::sleep(Duration::from_millis(16));
 
         Ok(())
     }

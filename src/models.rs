@@ -6,10 +6,10 @@ pub enum VehicleColor {
 }
 
 pub enum Direction {
-    North(i32),
-    East(i32),
-    South(i32),
-    West(i32),
+    North,
+    East,
+    South,
+    West,
 }
 
 #[allow(unused)]
