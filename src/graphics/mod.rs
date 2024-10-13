@@ -82,9 +82,11 @@ impl Interface {
     /// by calling the concerned drawing functions.
     fn render(&mut self) -> Result<(), String> {
         self.road.display(&mut self.canvas)?;
+
         self.vehicles
             .iter()
             .for_each(|v| v.display(&mut self.canvas).unwrap());
+
         self.canvas.present();
 
         Ok(())

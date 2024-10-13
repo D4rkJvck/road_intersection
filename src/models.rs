@@ -5,10 +5,18 @@ pub enum VehicleColor {
     Orange,
 }
 
+pub enum Direction {
+    North(i32),
+    East(i32),
+    South(i32),
+    West(i32),
+}
+
 #[allow(unused)]
 pub struct Vehicle {
     color: VehicleColor,
     speed: u32,
+    direction: Direction,
 }
 
 #[allow(unused)]

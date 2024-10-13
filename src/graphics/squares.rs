@@ -3,9 +3,9 @@ use sdl2::{pixels::Color, render::Canvas, video::Window};
 use super::lines::Line;
 
 pub struct Square {
-    color: Color,
     size: i32,
     sides: Vec<Line>,
+    color: Color,
 }
 
 impl Square {

@@ -1,6 +1,6 @@
 use sdl2::{pixels::Color, rect::Point, render::Canvas, video::Window};
 
-const RADIUS: i32 = 10;
+const RADIUS: i32 = 20;
 
 pub struct Circle {
     center: Point,
