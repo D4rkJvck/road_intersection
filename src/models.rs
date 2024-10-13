@@ -1,7 +1,12 @@
-use sdl2::pixels::Color;
+pub enum VehicleColor {
+    Blue,
+    Yellow,
+    Orange
+}
 
 pub struct Vehicle {
-    color: Color,
+    color: VehicleColor,
+    speed: u32,
 }
 
 pub enum TrafficLight {
@@ -10,7 +15,7 @@ pub enum TrafficLight {
 }
 
 pub struct Lane {
-    vehicles: Vec<Vehicle>,
+    vehicles_queue: Vec<Vehicle>,
     traffic_light: TrafficLight,
 }
 

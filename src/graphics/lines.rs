@@ -16,12 +16,12 @@ impl Line {
     }
 }
 
-pub struct Roads {
+pub struct RoadLines {
     vertical: Vec<Line>,
     horizontal: Vec<Line>,
 }
 
-impl Roads {
+impl RoadLines {
     pub fn new(width: u32, height: u32) -> Self {
         let mid_height = height as i32 / 2;
         let mid_width = width as i32 / 2;
@@ -34,12 +34,9 @@ impl Roads {
         let mid_vertical = Line::new(mid_width, 0, mid_width, height as i32);
         let left_vertical = Line::new(mid_width + 50, 0, mid_width + 50, height as i32);
 
-        let horizontal = vec![top_horizontal, mid_horizontal, bottom_horizontal];
-        let vertical = vec![right_vertical, mid_vertical, left_vertical];
-
         Self {
-            vertical,
-            horizontal,
+            vertical: vec![right_vertical, mid_vertical, left_vertical],
+            horizontal: vec![top_horizontal, mid_horizontal, bottom_horizontal],
         }
     }
 
