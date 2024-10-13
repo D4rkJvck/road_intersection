@@ -1,4 +1,4 @@
-use sdl2::rect::Point;
+use sdl2::{pixels::Color, rect::Point, render::Canvas, video::Window};
 
 pub struct Line(Point, Point);
 
@@ -16,35 +16,41 @@ impl Line {
     }
 }
 
-pub struct RoadLines {
-    vertical: Vec<Line>,
-    horizontal: Vec<Line>,
+pub struct Road {
+    lines: Vec<Line>,
 }
 
-impl RoadLines {
+impl Road {
     pub fn new(width: u32, height: u32) -> Self {
         let mid_height = height as i32 / 2;
         let mid_width = width as i32 / 2;
 
-        let top_horizontal = Line::new(0, mid_height - 50, width as i32, mid_height - 50);
-        let mid_horizontal = Line::new(0, mid_height, width as i32, mid_height);
-        let bottom_horizontal = Line::new(0, mid_height + 50, width as i32, mid_height + 50);
-
-        let right_vertical = Line::new(mid_width - 50, 0, mid_width - 50, height as i32);
-        let mid_vertical = Line::new(mid_width, 0, mid_width, height as i32);
-        let left_vertical = Line::new(mid_width + 50, 0, mid_width + 50, height as i32);
-
         Self {
-            vertical: vec![right_vertical, mid_vertical, left_vertical],
-            horizontal: vec![top_horizontal, mid_horizontal, bottom_horizontal],
+            lines: vec![
+                // Horizontal lines
+                Line::new(0, mid_height - 50, width as i32, mid_height - 50), // Top
+                Line::new(0, mid_height, width as i32, mid_height),           // Middle
+                Line::new(0, mid_height + 50, width as i32, mid_height + 50), // Bottom
+                // Vertical lines
+                Line::new(mid_width - 50, 0, mid_width - 50, height as i32), // Left
+                Line::new(mid_width, 0, mid_width, height as i32),           // Center
+                Line::new(mid_width + 50, 0, mid_width + 50, height as i32), // Right
+            ],
         }
     }
 
-    pub fn get_vertical(&self) -> &Vec<Line> {
-        &self.vertical
-    }
+     /// This function performs an iteration
+    /// over the road's lines
+    /// and draw them on the canvas.
+    pub fn display(&self, canvas: &mut Canvas<Window>) -> Result<(), String> {
+        canvas.set_draw_color(Color::RGB(255, 255, 255));
 
-    pub fn get_horizontal(&self) -> &Vec<Line> {
-        &self.horizontal
+        // Draw 3 vertical and 3 horizontal lines
+        // in the middle of the window
+        for line in self.lines.iter() {
+            canvas.draw_line(line.0, line.1)?;
+        }
+
+        Ok(())
     }
 }

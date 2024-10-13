@@ -1,11 +1,12 @@
+mod circles;
 mod lines;
 mod squares;
-mod circles;
 
-use lines::RoadLines;
+use lines::Road;
 use sdl2::{
     event::Event, keyboard::Keycode, pixels::Color, render::Canvas, video::Window, EventPump,
 };
+use squares::VehicleArea;
 
 const TITLE: &str = "ROAD INTERSECTION";
 const WIDTH: u32 = 720;
@@ -14,7 +15,8 @@ const HEIGHT: u32 = 720;
 pub struct Interface {
     canvas: Canvas<Window>,
     event_pump: EventPump,
-    roads: RoadLines,
+    road: Road,
+    vehicles: Vec<VehicleArea>,
 }
 
 impl Interface {
@@ -46,12 +48,18 @@ impl Interface {
             .event_pump()
             .unwrap();
 
-        let roads = RoadLines::new(WIDTH, HEIGHT);
+        let road = Road::new(WIDTH, HEIGHT);
+        let vehicles = vec![VehicleArea::new(
+            WIDTH as i32 / 2 - 50,
+            0,
+            Color::RGB(0, 0, 255),
+        )];
 
         Ok(Self {
-            roads,
             canvas,
             event_pump,
+            road,
+            vehicles,
         })
     }
 
@@ -67,8 +75,10 @@ impl Interface {
     /// everything that has been drawn on the canvas
     /// by calling the concerned drawing functions.
     fn render(&mut self) -> Result<(), String> {
-        self.display_road_lines()?;
-        self.display_vehicule_area()?;
+        self.road.display(&mut self.canvas)?;
+        self.vehicles
+            .iter()
+            .for_each(|v| v.display(&mut self.canvas).unwrap());
         self.canvas.present();
 
         Ok(())
@@ -82,52 +92,30 @@ impl Interface {
 
         for event in events {
             match event {
-                Event::KeyDown { keycode: Some(Keycode::UP), .. } => {} // TODO: Generate new `vehicle` from "North"
-                Event::KeyDown { keycode: Some(Keycode::RIGHT), .. } => {} // TODO: Generate new `vehicle` from "West"
-                Event::KeyDown { keycode: Some(Keycode::DOWN), .. } => {} // TODO: Generate new `vehicle` from "South"
-                Event::KeyDown { keycode: Some(Keycode::LEFT), .. } => {} // TODO: Generate new `vehicle` from "East"
-                Event::Quit { .. } | Event::KeyDown { keycode: Some(Keycode::ESCAPE), .. } => return Err("Exiting...".to_string()),
+                Event::KeyDown {
+                    keycode: Some(Keycode::UP),
+                    ..
+                } => {} // TODO: Generate new `vehicle` from "North"
+                Event::KeyDown {
+                    keycode: Some(Keycode::RIGHT),
+                    ..
+                } => {} // TODO: Generate new `vehicle` from "West"
+                Event::KeyDown {
+                    keycode: Some(Keycode::DOWN),
+                    ..
+                } => {} // TODO: Generate new `vehicle` from "South"
+                Event::KeyDown {
+                    keycode: Some(Keycode::LEFT),
+                    ..
+                } => {} // TODO: Generate new `vehicle` from "East"
+                Event::Quit { .. }
+                | Event::KeyDown {
+                    keycode: Some(Keycode::ESCAPE),
+                    ..
+                } => return Err("Exiting...".to_string()),
                 _ => {}
-            };
+            }
         }
-
-        Ok(())
-    }
-
-    /// This function performs an iteration
-    /// over the road's vertical and horizontal lines
-    /// and draw them on the canvas.
-    fn display_road_lines(&mut self) -> Result<(), String> {
-        self.canvas.set_draw_color(Color::RGB(255, 255, 255));
-
-        // Draw 3 vertical lines in the middle of the window
-        self.roads.get_vertical().iter().for_each(|line| {
-            self.canvas
-                .draw_line(line.get_start(), line.get_end())
-                .unwrap()
-        });
-
-        // Draw 3 horizontal lines in the middle of the window
-        self.roads.get_horizontal().iter().for_each(|line| {
-            self.canvas
-                .draw_line(line.get_start(), line.get_end())
-                .unwrap()
-        });
-
-        Ok(())
-    }
-
-    fn display_vehicule_area(&mut self) -> Result<(), String> {
-        let color = Color::RGB(0, 0, 255);
-        let square = squares::VehicleArea::new(color, (WIDTH as i32 / 2) - 50, 100);
-
-        self.canvas.set_draw_color(color);
-
-        square.get_sides().iter().for_each(|line| {
-            self.canvas
-               .draw_line(line.get_start(), line.get_end())
-               .unwrap()
-        });
 
         Ok(())
     }
