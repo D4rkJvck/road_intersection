@@ -1,5 +1,7 @@
 use sdl2::{pixels::Color, rect::Point, render::Canvas, video::Window};
 
+use super::squares::Square;
+
 pub struct Line(Point, Point);
 
 impl Line {
@@ -18,6 +20,7 @@ impl Line {
 
 pub struct Road {
     lines: Vec<Line>,
+    intersection: Square,
 }
 
 impl Road {
@@ -25,7 +28,15 @@ impl Road {
         let mid_height = height as i32 / 2;
         let mid_width = width as i32 / 2;
 
+        let intersection = Square::new(
+            mid_width - 50, 
+            mid_height - 50, 
+            100, 
+            Color::RGB(0, 0, 0)
+        );
+
         Self {
+            intersection,
             lines: vec![
                 // Horizontal lines
                 Line::new(0, mid_height - 50, width as i32, mid_height - 50), // Top
@@ -39,7 +50,7 @@ impl Road {
         }
     }
 
-     /// This function performs an iteration
+    /// This function performs an iteration
     /// over the road's lines
     /// and draw them on the canvas.
     pub fn display(&self, canvas: &mut Canvas<Window>) -> Result<(), String> {
@@ -50,6 +61,8 @@ impl Road {
         for line in self.lines.iter() {
             canvas.draw_line(line.0, line.1)?;
         }
+
+        self.intersection.display(canvas)?;
 
         Ok(())
     }

@@ -4,9 +4,14 @@ mod squares;
 
 use lines::Road;
 use sdl2::{
-    event::Event, keyboard::Keycode, pixels::Color, render::Canvas, video::Window, EventPump,
+    event::Event::{KeyDown, Quit},
+    keyboard::Keycode,
+    pixels::Color,
+    render::Canvas,
+    video::Window,
+    EventPump,
 };
-use squares::VehicleArea;
+use squares::Square;
 
 const TITLE: &str = "ROAD INTERSECTION";
 const WIDTH: u32 = 720;
@@ -16,7 +21,7 @@ pub struct Interface {
     canvas: Canvas<Window>,
     event_pump: EventPump,
     road: Road,
-    vehicles: Vec<VehicleArea>,
+    vehicles: Vec<Square>,
 }
 
 impl Interface {
@@ -49,9 +54,10 @@ impl Interface {
             .unwrap();
 
         let road = Road::new(WIDTH, HEIGHT);
-        let vehicles = vec![VehicleArea::new(
+        let vehicles = vec![Square::new(
             WIDTH as i32 / 2 - 50,
             0,
+            50,
             Color::RGB(0, 0, 255),
         )];
 
@@ -92,27 +98,11 @@ impl Interface {
 
         for event in events {
             match event {
-                Event::KeyDown {
-                    keycode: Some(Keycode::UP),
-                    ..
-                } => {} // TODO: Generate new `vehicle` from "North"
-                Event::KeyDown {
-                    keycode: Some(Keycode::RIGHT),
-                    ..
-                } => {} // TODO: Generate new `vehicle` from "West"
-                Event::KeyDown {
-                    keycode: Some(Keycode::DOWN),
-                    ..
-                } => {} // TODO: Generate new `vehicle` from "South"
-                Event::KeyDown {
-                    keycode: Some(Keycode::LEFT),
-                    ..
-                } => {} // TODO: Generate new `vehicle` from "East"
-                Event::Quit { .. }
-                | Event::KeyDown {
-                    keycode: Some(Keycode::ESCAPE),
-                    ..
-                } => return Err("Exiting...".to_string()),
+                KeyDown { keycode: Some(Keycode::UP), .. } => {}            // TODO: Generate new `vehicle` from "North"
+                KeyDown { keycode: Some(Keycode::RIGHT), .. } => {}         // TODO: Generate new `vehicle` from "West"
+                KeyDown { keycode: Some(Keycode::DOWN), .. } => {}          // TODO: Generate new `vehicle` from "South"
+                KeyDown { keycode: Some(Keycode::LEFT), .. } => {}          // TODO: Generate new `vehicle` from "East"
+                Quit { .. } | KeyDown { keycode: Some(Keycode::ESCAPE), .. } => return Err("Exiting...".to_string()),
                 _ => {}
             }
         }

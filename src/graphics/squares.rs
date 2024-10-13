@@ -2,20 +2,22 @@ use sdl2::{pixels::Color, render::Canvas, video::Window};
 
 use super::lines::Line;
 
-pub struct VehicleArea {
+pub struct Square {
     color: Color,
+    size: i32,
     sides: Vec<Line>,
 }
 
-impl VehicleArea {
-    pub fn new(x: i32, y: i32, color: Color) -> Self {
-        let top = Line::new(x, y, x + 50, y);
-        let right = Line::new(x + 50, y, x + 50, y + 50);
-        let bottom = Line::new(x + 50, y + 50, x, y + 50);
-        let left = Line::new(x, y + 50, x, y);
+impl Square {
+    pub fn new(x: i32, y: i32, size: i32, color: Color) -> Self {
+        let top = Line::new(x, y, x + size, y);
+        let right = Line::new(x + size, y, x + size, y + size);
+        let bottom = Line::new(x + size, y + size, x, y + size);
+        let left = Line::new(x, y + size, x, y);
 
         Self {
             color,
+            size,
             sides: vec![top, right, bottom, left],
         }
     }
